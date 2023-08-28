@@ -76,6 +76,10 @@ class CursosAlumnosController extends Controller
     public function show(cursos_alumnos $cursos_alumnos)
     {
         $cursos_alumnos = cursos_alumnos::all();
+        foreach($cursos_alumnos as $cursos_alumno){
+            $cursos_alumno->alumno;
+            $cursos_alumno->curso;
+        }
         return $cursos_alumnos;
     }
 

@@ -1,7 +1,12 @@
 <?php
 
+use App\Http\Controllers\AlumnosController;
+use App\Http\Controllers\CursosAlumnosController;
+use App\Http\Controllers\CursosController;
+use App\Http\Controllers\DocentesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------

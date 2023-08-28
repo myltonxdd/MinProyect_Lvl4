@@ -56,6 +56,9 @@ class AlumnosController extends Controller
     public function show(alumnos $alumnos)
     {
         $alumnos = alumnos::all();
+        foreach($alumnos as $alumno){
+            $alumno->cursos_alumno;
+        }
         return $alumnos;
     }
 

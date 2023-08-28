@@ -57,6 +57,9 @@ class DocentesController extends Controller
     public function show(docentes $docentes)
     {
         $docentes = docentes::all();
+        foreach($docentes as $docente){
+            $docente->cursos;
+        }
         return $docentes;
     }
 
