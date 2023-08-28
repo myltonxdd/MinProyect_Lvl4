@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\docentes;
+use Exception;
 use Illuminate\Http\Request;
 
 class DocentesController extends Controller
@@ -20,12 +21,26 @@ class DocentesController extends Controller
      */
     public function create(Request $body)
     {
-        $nuevaPersona = new docentes();
-        $nuevaPersona->name = $body->name;
-        $nuevaPersona->email = $body->email;
-        $nuevaPersona->state = $body->state;
-        $nuevaPersona->save();
-        return "El Docente fue agregado correctamente";
+        try {
+            $nuevaPersona = new docentes();
+            if($body->name){
+                $nuevaPersona->name = $body->name;
+            }else{
+                return "Debe tener nombre";
+            }
+            if($body->email){
+                $nuevaPersona->email = $body->email;
+            }else{
+                return "Debe tener email";
+            }
+        
+            $nuevaPersona->save();
+            return "El Docente fue agregado correctamente";
+
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+        
     }
 
     /**
@@ -56,13 +71,31 @@ class DocentesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, docentes $docentes)
+    public function update(Request $request, $id)
     {
-        $edita = docentes::find($request->id);
-        $edita ->name = $request->name;
-        $edita ->email = $request->email;
-        $edita ->state = $request->state;
-        $edita->save();
+        try {
+            if(docentes::find($id) != null){
+                $edita = docentes::find($id);
+                if($request->name){
+                    $edita ->name = $request->name;
+                }
+                if($request->email){
+                    $edita ->email = $request->email;
+                }
+                if($request->state){
+                    if($request->state != 0 || $request->state != 1){
+                        return "Recuerda que solo puede ser 0 o 1. Donde 0 es desactivado y 1 activado";
+                    }else{
+                        $edita ->state = $request->state;    
+                    }
+                }
+                $edita->save();
+            }
+            
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+        
     }
 
     /**
